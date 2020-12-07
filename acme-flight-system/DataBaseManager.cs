@@ -24,19 +24,20 @@ namespace acme_flight_system
             }
         }
 
-        public async Task AdicionaVoo(VooModel novo_voo)
+        public async Task AdicionaVoo(VooModel novo_voo,System.Action populate_grid_view_callback)
         {
             string query = "insert into TB_VOO values " +
-                        "(@ID_VOO,@Data,@Custo,@Distancia,@Captura_passaro,@Nivel_dor)";
+                        "(@ID_VOO,@Data_voo,@Custo,@Distancia,@Captura,@Nivel_dor)";
             using (var database_connection = GetDbConnection())
             {
                 await Task.Run( () => database_connection.Execute(query, novo_voo));
+                populate_grid_view_callback();
             }
         }
 
         public async Task DeleteVoo(VooModel novo_voo)
         {
-            string query = "UPDATE TB_VOO SET DATA_VOO=@Data CUSTO=@Custo DISTANCIA=@Distancia CAPTURA=@Captura_passaro NIVEL_DOR=@Nivel_dor" +
+            string query = "DELETE FROM TB_VOO" +
                            "WHERE ID_VOO=@ID_VOO";
             using (var database_connection = GetDbConnection())
             {
@@ -46,7 +47,7 @@ namespace acme_flight_system
 
         public async Task UpdateVoo(VooModel novo_voo)
         {
-            string query = "UPDATE TB_VOO SET DATA_VOO=@Data CUSTO=@Custo DISTANCIA=@Distancia CAPTURA=@Captura_passaro NIVEL_DOR=@Nivel_dor" +
+            string query = "UPDATE TB_VOO SET DATA_VOO=@Data_voo CUSTO=@Custo DISTANCIA=@Distancia CAPTURA=@Captura NIVEL_DOR=@Nivel_dor" +
                            "WHERE ID_VOO=@ID_VOO";
             using (var database_connection = GetDbConnection())
             {

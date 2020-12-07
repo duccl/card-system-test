@@ -31,17 +31,21 @@
             this.components = new System.ComponentModel.Container();
             this.mainLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.flightDataGridView = new System.Windows.Forms.DataGridView();
+            this.datavooDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.niveldorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.capturaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vooModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.formFlightTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.actionFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.incluir_button = new System.Windows.Forms.Button();
             this.excluir_button = new System.Windows.Forms.Button();
             this.dataFormPanel = new System.Windows.Forms.Panel();
+            this.nivelDor_numericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.distancia_numericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.custo_numericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.dataVoo_dateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.sim_checkBox = new System.Windows.Forms.CheckBox();
             this.nao_checkBox = new System.Windows.Forms.CheckBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.custo_textBox = new System.Windows.Forms.TextBox();
-            this.data_textBox = new System.Windows.Forms.TextBox();
             this.cancelar_button = new System.Windows.Forms.Button();
             this.salvar_button = new System.Windows.Forms.Button();
             this.nivelDor_label = new System.Windows.Forms.Label();
@@ -49,16 +53,15 @@
             this.captura_label = new System.Windows.Forms.Label();
             this.custo_label = new System.Windows.Forms.Label();
             this.data_label = new System.Windows.Forms.Label();
-            this.vooModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.datavooDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.niveldorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.capturaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mainLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.flightDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.vooModelBindingSource)).BeginInit();
             this.formFlightTableLayoutPanel.SuspendLayout();
             this.actionFlowLayoutPanel.SuspendLayout();
             this.dataFormPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.vooModelBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nivelDor_numericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.distancia_numericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.custo_numericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // mainLayoutPanel
@@ -95,6 +98,31 @@
             this.flightDataGridView.Size = new System.Drawing.Size(346, 505);
             this.flightDataGridView.TabIndex = 0;
             // 
+            // datavooDataGridViewTextBoxColumn
+            // 
+            this.datavooDataGridViewTextBoxColumn.DataPropertyName = "Data_voo";
+            this.datavooDataGridViewTextBoxColumn.HeaderText = "Data_voo";
+            this.datavooDataGridViewTextBoxColumn.Name = "datavooDataGridViewTextBoxColumn";
+            this.datavooDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // niveldorDataGridViewTextBoxColumn
+            // 
+            this.niveldorDataGridViewTextBoxColumn.DataPropertyName = "Nivel_dor";
+            this.niveldorDataGridViewTextBoxColumn.HeaderText = "Nivel_dor";
+            this.niveldorDataGridViewTextBoxColumn.Name = "niveldorDataGridViewTextBoxColumn";
+            this.niveldorDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // capturaDataGridViewTextBoxColumn
+            // 
+            this.capturaDataGridViewTextBoxColumn.DataPropertyName = "Captura";
+            this.capturaDataGridViewTextBoxColumn.HeaderText = "Captura";
+            this.capturaDataGridViewTextBoxColumn.Name = "capturaDataGridViewTextBoxColumn";
+            this.capturaDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // vooModelBindingSource
+            // 
+            this.vooModelBindingSource.DataSource = typeof(acme_flight_system.Models.VooModel);
+            // 
             // formFlightTableLayoutPanel
             // 
             this.formFlightTableLayoutPanel.ColumnCount = 1;
@@ -127,9 +155,11 @@
             this.incluir_button.TabIndex = 0;
             this.incluir_button.Text = "Incluir";
             this.incluir_button.UseVisualStyleBackColor = true;
+            this.incluir_button.Click += new System.EventHandler(this.incluir_button_Click);
             // 
             // excluir_button
             // 
+            this.excluir_button.Enabled = false;
             this.excluir_button.Location = new System.Drawing.Point(84, 3);
             this.excluir_button.Name = "excluir_button";
             this.excluir_button.Size = new System.Drawing.Size(75, 23);
@@ -139,12 +169,12 @@
             // 
             // dataFormPanel
             // 
+            this.dataFormPanel.Controls.Add(this.nivelDor_numericUpDown);
+            this.dataFormPanel.Controls.Add(this.distancia_numericUpDown);
+            this.dataFormPanel.Controls.Add(this.custo_numericUpDown);
+            this.dataFormPanel.Controls.Add(this.dataVoo_dateTimePicker);
             this.dataFormPanel.Controls.Add(this.sim_checkBox);
             this.dataFormPanel.Controls.Add(this.nao_checkBox);
-            this.dataFormPanel.Controls.Add(this.textBox5);
-            this.dataFormPanel.Controls.Add(this.textBox3);
-            this.dataFormPanel.Controls.Add(this.custo_textBox);
-            this.dataFormPanel.Controls.Add(this.data_textBox);
             this.dataFormPanel.Controls.Add(this.cancelar_button);
             this.dataFormPanel.Controls.Add(this.salvar_button);
             this.dataFormPanel.Controls.Add(this.nivelDor_label);
@@ -157,6 +187,71 @@
             this.dataFormPanel.Name = "dataFormPanel";
             this.dataFormPanel.Size = new System.Drawing.Size(340, 466);
             this.dataFormPanel.TabIndex = 1;
+            // 
+            // nivelDor_numericUpDown
+            // 
+            this.nivelDor_numericUpDown.Location = new System.Drawing.Point(99, 240);
+            this.nivelDor_numericUpDown.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.nivelDor_numericUpDown.Name = "nivelDor_numericUpDown";
+            this.nivelDor_numericUpDown.Size = new System.Drawing.Size(120, 20);
+            this.nivelDor_numericUpDown.TabIndex = 18;
+            // 
+            // distancia_numericUpDown
+            // 
+            this.distancia_numericUpDown.DecimalPlaces = 2;
+            this.distancia_numericUpDown.Location = new System.Drawing.Point(99, 143);
+            this.distancia_numericUpDown.Maximum = new decimal(new int[] {
+            -1,
+            -1,
+            -1,
+            0});
+            this.distancia_numericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.distancia_numericUpDown.Name = "distancia_numericUpDown";
+            this.distancia_numericUpDown.Size = new System.Drawing.Size(120, 20);
+            this.distancia_numericUpDown.TabIndex = 17;
+            this.distancia_numericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // custo_numericUpDown
+            // 
+            this.custo_numericUpDown.DecimalPlaces = 2;
+            this.custo_numericUpDown.Location = new System.Drawing.Point(99, 96);
+            this.custo_numericUpDown.Maximum = new decimal(new int[] {
+            -1,
+            -1,
+            -1,
+            0});
+            this.custo_numericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.custo_numericUpDown.Name = "custo_numericUpDown";
+            this.custo_numericUpDown.Size = new System.Drawing.Size(120, 20);
+            this.custo_numericUpDown.TabIndex = 16;
+            this.custo_numericUpDown.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            // 
+            // dataVoo_dateTimePicker
+            // 
+            this.dataVoo_dateTimePicker.Location = new System.Drawing.Point(99, 50);
+            this.dataVoo_dateTimePicker.Name = "dataVoo_dateTimePicker";
+            this.dataVoo_dateTimePicker.Size = new System.Drawing.Size(200, 20);
+            this.dataVoo_dateTimePicker.TabIndex = 15;
             // 
             // sim_checkBox
             // 
@@ -178,36 +273,9 @@
             this.nao_checkBox.Text = "Nao";
             this.nao_checkBox.UseVisualStyleBackColor = true;
             // 
-            // textBox5
-            // 
-            this.textBox5.Location = new System.Drawing.Point(99, 237);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 20);
-            this.textBox5.TabIndex = 12;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(99, 140);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 10;
-            // 
-            // custo_textBox
-            // 
-            this.custo_textBox.Location = new System.Drawing.Point(99, 93);
-            this.custo_textBox.Name = "custo_textBox";
-            this.custo_textBox.Size = new System.Drawing.Size(100, 20);
-            this.custo_textBox.TabIndex = 9;
-            // 
-            // data_textBox
-            // 
-            this.data_textBox.Location = new System.Drawing.Point(99, 47);
-            this.data_textBox.Name = "data_textBox";
-            this.data_textBox.Size = new System.Drawing.Size(100, 20);
-            this.data_textBox.TabIndex = 8;
-            // 
             // cancelar_button
             // 
+            this.cancelar_button.Enabled = false;
             this.cancelar_button.Location = new System.Drawing.Point(158, 309);
             this.cancelar_button.Name = "cancelar_button";
             this.cancelar_button.Size = new System.Drawing.Size(75, 23);
@@ -217,6 +285,7 @@
             // 
             // salvar_button
             // 
+            this.salvar_button.Enabled = false;
             this.salvar_button.Location = new System.Drawing.Point(30, 309);
             this.salvar_button.Name = "salvar_button";
             this.salvar_button.Size = new System.Drawing.Size(75, 23);
@@ -269,31 +338,6 @@
             this.data_label.TabIndex = 0;
             this.data_label.Text = "Data";
             // 
-            // vooModelBindingSource
-            // 
-            this.vooModelBindingSource.DataSource = typeof(acme_flight_system.Models.VooModel);
-            // 
-            // datavooDataGridViewTextBoxColumn
-            // 
-            this.datavooDataGridViewTextBoxColumn.DataPropertyName = "Data_voo";
-            this.datavooDataGridViewTextBoxColumn.HeaderText = "Data_voo";
-            this.datavooDataGridViewTextBoxColumn.Name = "datavooDataGridViewTextBoxColumn";
-            this.datavooDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // niveldorDataGridViewTextBoxColumn
-            // 
-            this.niveldorDataGridViewTextBoxColumn.DataPropertyName = "Nivel_dor";
-            this.niveldorDataGridViewTextBoxColumn.HeaderText = "Nivel_dor";
-            this.niveldorDataGridViewTextBoxColumn.Name = "niveldorDataGridViewTextBoxColumn";
-            this.niveldorDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // capturaDataGridViewTextBoxColumn
-            // 
-            this.capturaDataGridViewTextBoxColumn.DataPropertyName = "Captura";
-            this.capturaDataGridViewTextBoxColumn.HeaderText = "Captura";
-            this.capturaDataGridViewTextBoxColumn.Name = "capturaDataGridViewTextBoxColumn";
-            this.capturaDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
             // AcmeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -304,11 +348,14 @@
             this.Text = "ACME FLIGHT MANAGER";
             this.mainLayoutPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.flightDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.vooModelBindingSource)).EndInit();
             this.formFlightTableLayoutPanel.ResumeLayout(false);
             this.actionFlowLayoutPanel.ResumeLayout(false);
             this.dataFormPanel.ResumeLayout(false);
             this.dataFormPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.vooModelBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nivelDor_numericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.distancia_numericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.custo_numericUpDown)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -325,10 +372,6 @@
         private System.Windows.Forms.Panel dataFormPanel;
         private System.Windows.Forms.CheckBox sim_checkBox;
         private System.Windows.Forms.CheckBox nao_checkBox;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox custo_textBox;
-        private System.Windows.Forms.TextBox data_textBox;
         private System.Windows.Forms.Button cancelar_button;
         private System.Windows.Forms.Button salvar_button;
         private System.Windows.Forms.Label nivelDor_label;
@@ -339,6 +382,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn datavooDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn niveldorDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn capturaDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DateTimePicker dataVoo_dateTimePicker;
+        private System.Windows.Forms.NumericUpDown custo_numericUpDown;
+        private System.Windows.Forms.NumericUpDown nivelDor_numericUpDown;
+        private System.Windows.Forms.NumericUpDown distancia_numericUpDown;
     }
 }
 

@@ -166,6 +166,7 @@
             this.excluir_button.TabIndex = 1;
             this.excluir_button.Text = "Excluir";
             this.excluir_button.UseVisualStyleBackColor = true;
+            this.excluir_button.Click += new System.EventHandler(this.excluir_button_Click);
             // 
             // dataFormPanel
             // 
@@ -282,6 +283,7 @@
             this.cancelar_button.TabIndex = 7;
             this.cancelar_button.Text = "Cancelar";
             this.cancelar_button.UseVisualStyleBackColor = true;
+            this.cancelar_button.Click += new System.EventHandler(this.cancelar_button_Click);
             // 
             // salvar_button
             // 
@@ -292,6 +294,7 @@
             this.salvar_button.TabIndex = 6;
             this.salvar_button.Text = "Salvar";
             this.salvar_button.UseVisualStyleBackColor = true;
+            this.salvar_button.Click += new System.EventHandler(this.salvar_button_Click);
             // 
             // nivelDor_label
             // 

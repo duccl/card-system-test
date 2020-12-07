@@ -58,16 +58,32 @@ namespace acme_flight_system
             return todos_voos_registrados.Count != 0 ? todos_voos_registrados[todos_voos_registrados.Count - 1].ID_VOO : 0;
         }
 
+        private void ToggleButton(Button button)
+        {
+            button.Enabled = !button.Enabled;
+        }
+
         private void incluir_button_Click(object sender, System.EventArgs e)
         {
+            ResetDataForm();
+        }
+
+        private void ResetDataForm()
+        {
+            ClearFormData();
+            ToggleButton(salvar_button);
+            ToggleButton(cancelar_button);
+            ToggleButton(excluir_button);
+        }
+
+        private VooModel RetriveFlightOfForm()
+        {
             char checked_box_captura = GetCheckedBox();
-
-            if(checked_box_captura == '0')
+            if (checked_box_captura == '0')
             {
-                MessageBox.Show(new Form{ TopMost= true},"Apenas uma opção deve ser selecionada! Tente novamente");
-                return;
+                MessageBox.Show(new Form { TopMost = true }, "Apenas uma opção deve ser selecionada! Tente novamente");
+                return null;
             }
-
             VooModel voo = new VooModel
             {
                 Custo = (double)custo_numericUpDown.Value,
@@ -77,9 +93,28 @@ namespace acme_flight_system
                 Captura = checked_box_captura,
                 ID_VOO = RetrieveLastFlightId() + 1
             };
+            return voo;
+        }
 
-            dataBaseManager.AdicionaVoo(voo,() => PopulateFlightDataGridView());
-            ClearFormData();
+        private void salvar_button_Click(object sender, System.EventArgs e)
+        {
+            var voo = RetriveFlightOfForm();
+            if (voo == null) return;
+            dataBaseManager.AdicionaVoo(voo, () => PopulateFlightDataGridView());
+            ResetDataForm();
+        }
+
+        private void excluir_button_Click(object sender, System.EventArgs e)
+        {
+            var voo = RetriveFlightOfForm();
+            if (voo == null) return;
+            dataBaseManager.DeleteVoo(voo);
+            ResetDataForm();
+        }
+
+        private void cancelar_button_Click(object sender, System.EventArgs e)
+        {
+            ResetDataForm();
         }
     }
 }

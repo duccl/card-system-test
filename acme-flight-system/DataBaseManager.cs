@@ -13,6 +13,26 @@ namespace acme_flight_system
         public DataBaseManager(string database_name)
         {
             this.database_name = database_name;
+            IfDataBaseNotExistsCreateItAndCreateTableVoo();
+        }
+
+        private void CreateTableVoo()
+        {
+            string query = "CREATE TABLE TB_VOO (ID_VOO INT PRIMARY KEY,DATA_VOO DATETIME,CUSTO NUMERIC(10,2),DISTANCIA INT,CAPTURA CHAR(1),NIVEL_DOR INT,CHECK (CAPTURA = 'S' OR CAPTURA = 'N'),CHECK (NIVEL_DOR >= 0 AND NIVEL_DOR <= 10));";
+            using (var database_connection = GetDbConnection())
+            {
+                database_connection.Execute(query);
+            }
+        }
+
+        private void IfDataBaseNotExistsCreateItAndCreateTableVoo()
+        {
+            string connection_string_sqlite_file = LoadDataBaseConnectionString().Split(';')[0].Split('=')[1];
+            if (!System.IO.File.Exists(connection_string_sqlite_file)) 
+            {
+                System.IO.File.Create(connection_string_sqlite_file).Close();
+                CreateTableVoo();
+            }
         }
 
         public async Task<List<VooModel>> ResgataTodosRegistrosDeVoos()

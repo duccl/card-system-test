@@ -135,6 +135,7 @@ namespace acme_flight_system
         {
             var voo = RetriveFlightOfForm();
             if (voo == null) return;
+            voo.ID_VOO = flightDataGridView.CurrentRow.Index + 1;
             dataBaseManager.DeleteVoo(voo,() => PopulateFlightDataGridView());
             ResetDataForm();
         }

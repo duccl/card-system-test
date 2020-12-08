@@ -31,10 +31,6 @@
             this.components = new System.ComponentModel.Container();
             this.mainLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.flightDataGridView = new System.Windows.Forms.DataGridView();
-            this.datavooDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.niveldorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.capturaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.vooModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.formFlightTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.actionFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.incluir_button = new System.Windows.Forms.Button();
@@ -53,15 +49,19 @@
             this.captura_label = new System.Windows.Forms.Label();
             this.custo_label = new System.Windows.Forms.Label();
             this.data_label = new System.Windows.Forms.Label();
+            this.datavooDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.niveldorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.capturaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vooModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.mainLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.flightDataGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.vooModelBindingSource)).BeginInit();
             this.formFlightTableLayoutPanel.SuspendLayout();
             this.actionFlowLayoutPanel.SuspendLayout();
             this.dataFormPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nivelDor_numericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.distancia_numericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.custo_numericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.vooModelBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // mainLayoutPanel
@@ -93,35 +93,12 @@
             this.flightDataGridView.DataSource = this.vooModelBindingSource;
             this.flightDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flightDataGridView.Location = new System.Drawing.Point(3, 3);
+            this.flightDataGridView.MultiSelect = false;
             this.flightDataGridView.Name = "flightDataGridView";
             this.flightDataGridView.ReadOnly = true;
             this.flightDataGridView.Size = new System.Drawing.Size(346, 505);
             this.flightDataGridView.TabIndex = 0;
-            // 
-            // datavooDataGridViewTextBoxColumn
-            // 
-            this.datavooDataGridViewTextBoxColumn.DataPropertyName = "Data_voo";
-            this.datavooDataGridViewTextBoxColumn.HeaderText = "Data_voo";
-            this.datavooDataGridViewTextBoxColumn.Name = "datavooDataGridViewTextBoxColumn";
-            this.datavooDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // niveldorDataGridViewTextBoxColumn
-            // 
-            this.niveldorDataGridViewTextBoxColumn.DataPropertyName = "Nivel_dor";
-            this.niveldorDataGridViewTextBoxColumn.HeaderText = "Nivel_dor";
-            this.niveldorDataGridViewTextBoxColumn.Name = "niveldorDataGridViewTextBoxColumn";
-            this.niveldorDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // capturaDataGridViewTextBoxColumn
-            // 
-            this.capturaDataGridViewTextBoxColumn.DataPropertyName = "Captura";
-            this.capturaDataGridViewTextBoxColumn.HeaderText = "Captura";
-            this.capturaDataGridViewTextBoxColumn.Name = "capturaDataGridViewTextBoxColumn";
-            this.capturaDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // vooModelBindingSource
-            // 
-            this.vooModelBindingSource.DataSource = typeof(acme_flight_system.Models.VooModel);
+            this.flightDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.flightDataGridView_CellContentClick);
             // 
             // formFlightTableLayoutPanel
             // 
@@ -159,7 +136,6 @@
             // 
             // excluir_button
             // 
-            this.excluir_button.Enabled = false;
             this.excluir_button.Location = new System.Drawing.Point(84, 3);
             this.excluir_button.Name = "excluir_button";
             this.excluir_button.Size = new System.Drawing.Size(75, 23);
@@ -341,6 +317,31 @@
             this.data_label.TabIndex = 0;
             this.data_label.Text = "Data";
             // 
+            // datavooDataGridViewTextBoxColumn
+            // 
+            this.datavooDataGridViewTextBoxColumn.DataPropertyName = "Data_voo";
+            this.datavooDataGridViewTextBoxColumn.HeaderText = "Data_voo";
+            this.datavooDataGridViewTextBoxColumn.Name = "datavooDataGridViewTextBoxColumn";
+            this.datavooDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // niveldorDataGridViewTextBoxColumn
+            // 
+            this.niveldorDataGridViewTextBoxColumn.DataPropertyName = "Nivel_dor";
+            this.niveldorDataGridViewTextBoxColumn.HeaderText = "Nivel_dor";
+            this.niveldorDataGridViewTextBoxColumn.Name = "niveldorDataGridViewTextBoxColumn";
+            this.niveldorDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // capturaDataGridViewTextBoxColumn
+            // 
+            this.capturaDataGridViewTextBoxColumn.DataPropertyName = "Captura";
+            this.capturaDataGridViewTextBoxColumn.HeaderText = "Captura";
+            this.capturaDataGridViewTextBoxColumn.Name = "capturaDataGridViewTextBoxColumn";
+            this.capturaDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // vooModelBindingSource
+            // 
+            this.vooModelBindingSource.DataSource = typeof(acme_flight_system.Models.VooModel);
+            // 
             // AcmeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -351,7 +352,6 @@
             this.Text = "ACME FLIGHT MANAGER";
             this.mainLayoutPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.flightDataGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.vooModelBindingSource)).EndInit();
             this.formFlightTableLayoutPanel.ResumeLayout(false);
             this.actionFlowLayoutPanel.ResumeLayout(false);
             this.dataFormPanel.ResumeLayout(false);
@@ -359,6 +359,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nivelDor_numericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.distancia_numericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.custo_numericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.vooModelBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }

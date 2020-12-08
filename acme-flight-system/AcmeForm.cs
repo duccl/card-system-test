@@ -7,7 +7,7 @@ namespace acme_flight_system
     {
         private DataBaseManager dataBaseManager;
         private System.Collections.Generic.List<VooModel> todos_voos_registrados;
-        
+        private bool flight_selected;
         public AcmeForm()
         {
             InitializeComponent();
@@ -73,7 +73,7 @@ namespace acme_flight_system
             ClearFormData();
             ToggleButton(salvar_button);
             ToggleButton(cancelar_button);
-            ToggleButton(excluir_button);
+            flight_selected = false;
         }
 
         private VooModel RetriveFlightOfForm()
@@ -91,16 +91,43 @@ namespace acme_flight_system
                 Nivel_dor = (int)nivelDor_numericUpDown.Value,
                 Distancia = (int)distancia_numericUpDown.Value,
                 Captura = checked_box_captura,
-                ID_VOO = RetrieveLastFlightId() + 1
             };
             return voo;
+        }
+
+        private void PopulateForm(VooModel voo)
+        {
+            custo_numericUpDown.Value = (decimal)voo.Custo;
+            dataVoo_dateTimePicker.Value = voo.Data_voo;
+            nivelDor_numericUpDown.Value = (decimal)voo.Nivel_dor;
+            distancia_numericUpDown.Value = (decimal)voo.Distancia;
+            if (voo.Captura == 'S')
+            {
+                sim_checkBox.Checked = true;
+                nao_checkBox.Checked = false;
+            }
+            else
+            {
+                nao_checkBox.Checked = true;
+                sim_checkBox.Checked = false;
+            }
         }
 
         private void salvar_button_Click(object sender, System.EventArgs e)
         {
             var voo = RetriveFlightOfForm();
             if (voo == null) return;
-            dataBaseManager.AdicionaVoo(voo, () => PopulateFlightDataGridView());
+
+            if (flight_selected)
+            {
+                voo.ID_VOO = flightDataGridView.CurrentRow.Index + 1;
+                dataBaseManager.UpdateVoo(voo, () => PopulateFlightDataGridView());
+            }
+            else
+            {
+                voo.ID_VOO += RetrieveLastFlightId() + 1;
+                dataBaseManager.AdicionaVoo(voo, () => PopulateFlightDataGridView());
+            }
             ResetDataForm();
         }
 
@@ -108,13 +135,20 @@ namespace acme_flight_system
         {
             var voo = RetriveFlightOfForm();
             if (voo == null) return;
-            dataBaseManager.DeleteVoo(voo);
+            dataBaseManager.DeleteVoo(voo,() => PopulateFlightDataGridView());
             ResetDataForm();
         }
 
         private void cancelar_button_Click(object sender, System.EventArgs e)
         {
             ResetDataForm();
+        }
+
+        private void flightDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var selectedFlight = (VooModel)flightDataGridView.CurrentRow.DataBoundItem;
+            flight_selected = true;
+            PopulateForm(selectedFlight);
         }
     }
 }
